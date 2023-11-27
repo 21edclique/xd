@@ -1,0 +1,47 @@
+-- Crear la tabla nivel
+CREATE TABLE nivel (
+    id_nivel INT PRIMARY KEY,
+    nombre_nivel VARCHAR(255) NOT NULL
+);
+-- Crear la tabla curso
+CREATE TABLE curso (
+    id_curso INT PRIMARY KEY,
+    nombre_curso VARCHAR(255) NOT NULL,
+    id_nivel INT,
+    FOREIGN KEY (id_nivel) REFERENCES nivel(id_nivel)
+);
+
+
+-- Crear la tabla estudiantes como la tabla principal
+CREATE TABLE estudiantes (
+    cedula INT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    id_nivel INT,
+    FOREIGN KEY (id_nivel) REFERENCES nivel(id_nivel),
+    id_curso INT,
+    FOREIGN KEY (id_CURSO) REFERENCES CURSO(id_curso)
+);
+
+
+
+
+SELECT
+    nombre ,
+    (
+        SELECT curso
+        FROM curso
+        WHERE cedula = cedula
+        ) AS curso,
+    (
+        SELECT nivel
+        FROM nivel
+        WHERE id_nivel = e.id_nivel
+        ) AS nivel
+FROM
+    estudiantes e
+WHERE
+    e.cedula = 1; 
+
+SELECT e.nombre, c.nombre_curso, n.nombre_nivel FROM estudiantes e 
+JOIN curso c ON e.id_curso = c.id_curso
+ JOIN nivel n ON e.id_nivel = n.id_nivel WHERE e.cedula = 2;
